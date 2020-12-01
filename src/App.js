@@ -1,21 +1,34 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { withRouter } from "react-router-dom";
 import "./App.css";
+import Form from "./Form";
 import {
   decrement,
   increment,
   totalCount,
   totalNumber,
   allPost,
+  allPostById,
 } from "./redux/slices/count";
 
 function App() {
   const dispatch = useDispatch();
-  const { count, nitCount, users, status } = useSelector(totalNumber);
+  const { count, nitCount, users, status, singleUser } = useSelector(
+    totalNumber
+  );
 
   useEffect(() => {
     if (status === "idle") dispatch(allPost());
   }, [allPost, dispatch]);
+
+  useEffect(() => {
+    dispatch(allPostById());
+  }, [singleUser]);
+
+  const onView = (id) => {
+    dispatch(allPostById(id));
+  };
 
   const handleUp = () => {
     dispatch(increment());
@@ -31,6 +44,9 @@ function App() {
   };
   return (
     <div className="App">
+      <>
+        <Form />
+      </>
       <h1>My Amazing Counter</h1>
       <h2>Current Count: {count}</h2>
       <button onClick={handleUp}>UP</button>
@@ -38,15 +54,23 @@ function App() {
       <button onClick={() => submitCount(count)}>Submit Count</button>
       <ul style={{ listStyleType: "none" }}>
         {nitCount.map(({ total }, index) => (
-          <li key={index}>{total}</li>
+          <div>
+            <li key={index}>{total}</li>
+            <button onClick={() => onView(index)}>delete</button>
+          </div>
         ))}
       </ul>
       <ul>{users.length}</ul>
-      <ul>
+      <ul style={{ listStyleType: "none" }}>
         {status === "success" && (
           <>
             {users.map((user) => (
-              <li key={user.id}> {user.title} </li>
+              <>
+                <div key={user.id}>
+                  <li> {user.title} </li>
+                  <button onClick={() => onView(user.id)}>View</button>
+                </div>
+              </>
             ))}
           </>
         )}

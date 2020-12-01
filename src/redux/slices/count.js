@@ -7,6 +7,13 @@ export const allPost = createAsyncThunk("user/allPost", async () => {
   return res.data;
 });
 
+export const allPostById = createAsyncThunk("user/allPostById", async (id) => {
+  const res = await Axios.get(
+    `https://jsonplaceholder.typicode.com/posts/${id}`
+  );
+  return res.data;
+});
+
 const countSlice = createSlice({
   name: "count",
   initialState: {
@@ -14,6 +21,7 @@ const countSlice = createSlice({
     count: 0,
     nitCount: [],
     users: [],
+    singleUser: [],
   },
   reducers: {
     increment: (state) => {
@@ -31,6 +39,11 @@ const countSlice = createSlice({
       state.status = "success";
       const { payload } = action;
       state.users.push(...payload);
+    },
+    [allPostById.fulfilled]: (state, action) => {
+      state.status = "success";
+      const { payload } = action;
+      state.singleUser = payload;
     },
   },
 });
