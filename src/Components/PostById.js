@@ -10,7 +10,7 @@ const PostById = () => {
 
   useEffect(() => {
     dispatch(allPostById());
-  }, [postById, id]);
+  }, []);
 
   return (
     <div>

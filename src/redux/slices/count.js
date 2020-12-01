@@ -18,6 +18,7 @@ const countSlice = createSlice({
   name: "count",
   initialState: {
     loading: true,
+    status: "idle",
     count: 0,
     nitCount: [],
     users: [],
@@ -46,8 +47,8 @@ const countSlice = createSlice({
   extraReducers: {
     [allPost.fulfilled]: (state, action) => {
       const { payload } = action;
+      state.users = payload;
       state.loading = false;
-      state.users.push(...payload);
     },
     [allPostById.fulfilled]: (state, action) => {
       const { payload } = action;

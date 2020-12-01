@@ -12,15 +12,14 @@ import {
   deleteCountById,
   deletePostById,
 } from "../redux/slices/count";
-import Form from "./Form";
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const { count, nitCount, users, loading } = useSelector(totalNumber);
+  const { count, nitCount, users, loading, status } = useSelector(totalNumber);
 
   useEffect(() => {
-    dispatch(allPost());
-  }, [allPost, dispatch]);
+    if (status === "idle") dispatch(allPost());
+  }, [allPost, dispatch, status]);
 
   const onView = (id) => {
     dispatch(allPostById(id));
@@ -40,9 +39,6 @@ const Profile = () => {
   };
   return (
     <div>
-      <>
-        <Form />
-      </>
       <h1>My Amazing Counter</h1>
       <h2>Current Count: {count}</h2>
       <button onClick={handleUp}>UP</button>
@@ -62,18 +58,16 @@ const Profile = () => {
       <ul style={{ listStyleType: "none" }}>
         {!loading ? (
           <>
-            {users.map((user) => (
-              <>
-                <div key={user.id}>
-                  <li> {user.title} </li>
-                  <Link to={`/post/${user.id}`}>
-                    <button onClick={() => onView(user.id)}>View</button>
-                  </Link>
-                  <button onClick={() => dispatch(deletePostById(user.id))}>
-                    delete
-                  </button>
-                </div>
-              </>
+            {users.map((user, idx) => (
+              <div key={idx}>
+                <li> {user.title} </li>
+                <Link to={`/post/${user.id}`}>
+                  <button onClick={() => onView(user.id)}>View</button>
+                </Link>
+                <button onClick={() => dispatch(deletePostById(user.id))}>
+                  delete
+                </button>
+              </div>
             ))}
           </>
         ) : (
