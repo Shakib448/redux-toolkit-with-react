@@ -21,14 +21,23 @@ const countSlice = createSlice({
     count: 0,
     nitCount: [],
     users: [],
-    singleUser: [],
+    postById: [],
   },
+
   reducers: {
     increment: (state) => {
       state.count = state.count + 1;
     },
     decrement: (state) => {
       state.count = state.count - 1;
+    },
+    deleteCountById: (state, action) => {
+      const { payload } = action;
+      delete state.nitCount.shift(payload);
+    },
+    deletePostById: (state, action) => {
+      const { payload } = action;
+      delete state.users.shift(payload);
     },
     totalCount: (count, action) => {
       count.nitCount.push(action.payload);
@@ -43,7 +52,7 @@ const countSlice = createSlice({
     [allPostById.fulfilled]: (state, action) => {
       state.status = "success";
       const { payload } = action;
-      state.singleUser = payload;
+      state.postById = payload;
     },
   },
 });
@@ -53,6 +62,8 @@ export const {
   decrement,
   totalCount,
   loadUser,
+  deleteCountById,
+  deletePostById,
 } = countSlice.actions;
 
 export default countSlice.reducer;

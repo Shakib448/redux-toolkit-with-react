@@ -10,6 +10,8 @@ import {
   totalNumber,
   allPost,
   allPostById,
+  deleteCountById,
+  deletePostById,
 } from "./redux/slices/count";
 
 function App() {
@@ -53,10 +55,12 @@ function App() {
       <button onClick={handleDown}>DOWN</button> <br /> <br />
       <button onClick={() => submitCount(count)}>Submit Count</button>
       <ul style={{ listStyleType: "none" }}>
-        {nitCount.map(({ total }, index) => (
+        {nitCount.map(({ total }, id) => (
           <div>
-            <li key={index}>{total}</li>
-            <button onClick={() => onView(index)}>delete</button>
+            <li key={id}>{total}</li>
+            <button onClick={() => dispatch(deleteCountById(id))}>
+              delete
+            </button>
           </div>
         ))}
       </ul>
@@ -69,6 +73,9 @@ function App() {
                 <div key={user.id}>
                   <li> {user.title} </li>
                   <button onClick={() => onView(user.id)}>View</button>
+                  <button onClick={() => dispatch(deletePostById(user.id))}>
+                    delete
+                  </button>
                 </div>
               </>
             ))}
