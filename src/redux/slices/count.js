@@ -17,11 +17,11 @@ export const allPostById = createAsyncThunk("user/allPostById", async (id) => {
 const countSlice = createSlice({
   name: "count",
   initialState: {
-    status: "idle",
+    loading: true,
     count: 0,
     nitCount: [],
     users: [],
-    postById: [],
+    postById: {},
   },
 
   reducers: {
@@ -45,12 +45,12 @@ const countSlice = createSlice({
   },
   extraReducers: {
     [allPost.fulfilled]: (state, action) => {
-      state.status = "success";
       const { payload } = action;
       state.users.push(...payload);
+      state.loading = false;
     },
     [allPostById.fulfilled]: (state, action) => {
-      state.status = "success";
+      state.loading = false;
       const { payload } = action;
       state.postById = payload;
     },

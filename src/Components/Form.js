@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { formData, formSelector } from "./redux/slices/form";
+import { formData, formSelector } from "../redux/slices/form";
 
 const Form = () => {
   const dispatch = useDispatch();
