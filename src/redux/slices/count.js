@@ -46,11 +46,10 @@ const countSlice = createSlice({
   extraReducers: {
     [allPost.fulfilled]: (state, action) => {
       const { payload } = action;
-      state.users.push(...payload);
       state.loading = false;
+      state.users.push(...payload);
     },
     [allPostById.fulfilled]: (state, action) => {
-      state.loading = false;
       const { payload } = action;
       state.postById = payload;
     },

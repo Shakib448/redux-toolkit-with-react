@@ -10,7 +10,7 @@ const PostById = () => {
 
   useEffect(() => {
     dispatch(allPostById());
-  }, [postById]);
+  }, [postById, id]);
 
   return (
     <div>
@@ -19,14 +19,16 @@ const PostById = () => {
       </h1>
       {!loading ? (
         <ul style={{ listStyleType: "none", textAlign: "left" }}>
-          <li>
-            {" "}
-            <strong>Title: </strong> {postById.title}
-          </li>
-          <li>
-            {" "}
-            <strong>Body: </strong> {postById.body}
-          </li>
+          <>
+            <li>
+              {" "}
+              <strong>Title: </strong> {postById.title}
+            </li>
+            <li>
+              {" "}
+              <strong>Body: </strong> {postById.body}
+            </li>
+          </>
         </ul>
       ) : (
         <h1>Loading...</h1>
